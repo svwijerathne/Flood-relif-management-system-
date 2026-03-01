@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flood Relief Request</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, select, textarea, button { display: block; margin-bottom: 15px; width: 300px; padding: 5px; }
+        label { font-weight: bold; margin-top: 10px; display: block; }
+    </style>
+</head>
+<body>
+    <h2>Flood Relief Request Form</h2>
+    <form action="submit_request.php" method="POST">
+        <label for="contact_person">Contact Person Full Name:</label>
+        <input type="text" id="contact_person" name="contact_person" required>
+
+        <label for="contact_number">Phone Number:</label>
+        <input type="text" id="contact_number" name="contact_number" required>
+
+        <label for="family_members">Family Members:</label>
+        <input type="number" id="family_members" name="family_members" required min="1">
+
+        <label for="region_id">District:</label>
+        <select id="region_id" name="region_id" required>
+            <option value="">--Select District--</option>
+            <option value="1">Ampara</option>
+            <option value="2">Anuradhapura</option>
+            <option value="3">Badulla</option>
+            <option value="4">Batticaloa</option>
+            <option value="5">Colombo</option>
+            <option value="6">Galle</option>
+            <option value="7">Gampaha</option>
+            <option value="8">Hambantota</option>
+            <option value="9">Jaffna</option>
+            <option value="10">Kalutara</option>
+            <option value="11">Kandy</option>
+            <option value="12">Kegalle</option>
+            <option value="13">Kilinochchi</option>
+            <option value="14">Kurunegala</option>
+            <option value="15">Mannar</option>
+            <option value="16">Matale</option>
+            <option value="17">Matara</option>
+            <option value="18">Monaragala</option>
+            <option value="19">Mullaitivu</option>
+            <option value="20">Nuwara Eliya</option>
+            <option value="21">Polonnaruwa</option>
+            <option value="22">Puttalama</option>
+            <option value="23">Ratnapura</option>
+            <option value="24">Trincomalee</option>
+            <option value="25">Vavuniya</option>
+
+
+        </select>
+
+        <label for="divisional_secretariat">Divisional Secretariat:</label>
+        <input type="text" id="divisional_secretariat" name="divisional_secretariat" required>
+
+        <label for="gn_division">GN Division:</label>
+        <input type="text" id="gn_division" name="gn_division" required>
+
+        <label for="relief_type">Relief Type:</label>
+        <select id="relief_type" name="relief_type" required>
+            <option value="">--Select Relief Type--</option>
+            <option value="Food">Food</option>
+            <option value="Water">Water</option>
+            <option value="Medicine">Medicine</option>
+            <option value="Shelter">Shelter</option>
+        </select>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
+
+        <label for="severity">Severity:</label>
+        <select id="severity" name="severity" required>
+            <option value="">--Select Severity--</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <label for="description">Description (optional):</label>
+        <textarea id="description" name="description"></textarea>
+
+        <button type="submit">Submit Request</button>
+    </form>
+</body>
+</html>

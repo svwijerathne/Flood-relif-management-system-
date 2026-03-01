@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Region</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, select, button { display: block; margin-bottom: 15px; width: 300px; padding: 5px; }
+        label { font-weight: bold; margin-top: 10px; display: block; }
+    </style>
+</head>
+<body>
+    <h2>Add New Region</h2>
+    <form action="add_region.php" method="POST">
+        <label for="district_name">District Name:</label>
+        <input type="text" id="district_name" name="district_name" placeholder="Enter district name" required>
+
+        <label for="severity_level">Severity Level:</label>
+        <select id="severity_level" name="severity_level" required>
+            <option value="">--Select Severity--</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <button type="submit">Add Region</button>
+    </form>
+</body>
+</html>
