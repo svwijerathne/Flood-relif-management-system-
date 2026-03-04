@@ -44,7 +44,7 @@
 .hero{
     height:70vh;
     background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-    url("image1.png");
+    url("./animated-flood.gif");
     background-size:cover;
     background-position:center;
     display:flex;
@@ -65,7 +65,7 @@
 }
 
 .btn{
-    background:#00bcd4;
+    background:#e74804;
     color:white;
     padding:10px 20px;
     text-decoration:none;
@@ -74,7 +74,7 @@
 }
 
 .btn:hover{
-    background:#008c9e;
+    background:#e76304;
 }
 
 /* ================= HOW TO SECTION ================= */
