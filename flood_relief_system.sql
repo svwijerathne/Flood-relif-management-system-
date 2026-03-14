@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 22, 2026 at 01:11 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Mar 14, 2026 at 05:21 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -52,7 +52,7 @@ INSERT INTO `regions` (`id`, `district_name`, `severity_level`) VALUES
 
 CREATE TABLE `requests` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `region_id` int(11) NOT NULL,
   `divisional_secretariat` varchar(100) NOT NULL,
   `gn_division` varchar(100) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE `requests` (
   `family_members` int(11) NOT NULL,
   `severity` enum('Low','Medium','High') NOT NULL,
   `description` text DEFAULT NULL,
-  `status` enum('Pending','Delivered') DEFAULT 'Pending',
+  `status` enum('Pending','Delivered','Approved','Rejected') DEFAULT 'Pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -72,8 +72,14 @@ CREATE TABLE `requests` (
 --
 
 INSERT INTO `requests` (`id`, `user_id`, `region_id`, `divisional_secretariat`, `gn_division`, `relief_type`, `contact_person`, `contact_number`, `address`, `family_members`, `severity`, `description`, `status`, `created_at`) VALUES
-(1, 2, 5, 'PAS Perera', '255/A', 'Food', 'Shan Silva', '0782313309', '200/1/D Hirana Road,Palmadula.', 4, 'High', NULL, 'Pending', '2026-02-22 10:55:34'),
-(2, 1, 3, 'Dimuthu Rathnayaka', '56/F', 'Food', 'Amila Perera', '0753498021', 'No 145,Kalalgoda .', 5, 'Low', NULL, 'Pending', '2026-02-22 11:32:04');
+(2, NULL, 5, 'Colombo DS', 'GN-101', 'Food', 'Sunil Perera', '0771112223', '123 Main St, Colombo', 4, 'High', 'Food aid successfully provided.', 'Delivered', '2026-03-10 02:51:03'),
+(4, NULL, 5, 'Colombo DS', 'GN-101', 'Food', 'Sunil Perera', '0771112223', '123 Main St, Colombo', 4, 'High', 'Food aid successfully provided.', 'Delivered', '2026-03-10 02:51:05'),
+(6, NULL, 5, 'Colombo DS', 'GN-101', 'Food', 'Sunil Perera', '0771112223', '123 Main St, Colombo', 4, 'High', 'Food aid successfully provided.', 'Delivered', '2026-03-10 02:51:05'),
+(8, NULL, 5, 'Colombo DS', 'GN-101', 'Food', 'Sunil Perera', '0771112223', '123 Main St, Colombo', 4, 'High', 'Food aid successfully provided.', 'Approved', '2026-03-10 02:55:16'),
+(11, NULL, 2, 'Gampaha DS', 'GN-202', 'Medicine', 'Kamal Silva', '0719876543', '45 Park Rd, Gampaha', 2, 'Medium', 'Medicine required for children.', 'Pending', '2026-03-10 02:57:36'),
+(12, NULL, 3, 'Kalutara DS', 'GN-303', 'Shelter', 'Nimali Perera', '0751114445', '78 River Rd, Kalutara', 5, 'Low', 'Shelter tents requested.', 'Rejected', '2026-03-10 03:01:57'),
+(18, 16008, 5, 'colombo DS', 'GN-101', 'Medicine', 'hi how are you ', '0987763452', 'no25/10, Colombo 10', 2, 'Low', NULL, 'Pending', '2026-03-12 05:39:27'),
+(19, 16008, 5, 'colombo DS', 'GN-101', 'Medicine', 'hi how are you ', '0987763452', 'no25/10, Colombo 10', 2, 'Low', NULL, 'Rejected', '2026-03-12 05:41:13');
 
 -- --------------------------------------------------------
 
@@ -86,7 +92,7 @@ CREATE TABLE `users` (
   `full_name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('admin','user') NOT NULL,
+  `role` enum('admin','user') NOT NULL DEFAULT 'user',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -97,7 +103,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `created_at`) VALUES
 (1, 'Amila Perera', 'amilaperera@gmail.com', '2026AP@', 'user', '2026-02-22 03:46:17'),
 (2, 'Chamil Pathum', 'chamilpathum@gmail.com', 'cp10#d', 'user', '2026-02-22 03:51:37'),
-(3, 'shashika De Silva', 'shashikasilva@gmail.com', '39ss@9', 'user', '2026-02-22 03:53:20');
+(3, 'shashika De Silva', 'shashikasilva@gmail.com', '39ss@9', 'user', '2026-02-22 03:53:20'),
+(16007, 'sandali Wijerathne', 'san@gmail.com', 'san2005', 'admin', '2026-03-10 03:18:05'),
+(16008, 'hi how are you ', 'hi@gmail.com', 'hi123', 'user', '2026-03-12 04:23:12');
 
 --
 -- Indexes for dumped tables
@@ -139,13 +147,13 @@ ALTER TABLE `regions`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16009;
 
 --
 -- Constraints for dumped tables
