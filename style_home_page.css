@@ -57,8 +57,9 @@
 }
 
 @media (max-width: 576px) {
-    .brand-lanka { font-size: 20px; }
-    .brand-relief { font-size: 16px; }
+    .brand-flood, .brand-relief {
+        font-size: 1.1rem; 
+    }
     .logo-box .protection-icon { font-size: 28px; }
 }
 
@@ -166,3 +167,47 @@ footer {
     padding: 30px 10px;
 }
 
+.navbar-toggler {
+    padding: 0.25rem 0.5rem; 
+    font-size: 0.85rem;      
+    border: 1px solid #e2e8f0; 
+    border-radius: 6px;      
+    transition: all 0.2s ease;
+}
+
+
+.navbar-toggler-icon {
+    width: 1.2em; 
+    height: 1.2em; 
+    filter: contrast(0.1); 
+}
+
+.navbar-toggler:hover {
+    background-color: #f7fafc;
+    border-color: #cbd5e0;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+    outline: none;
+}
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: #ffffff;
+        border-radius: 15px;
+        margin-top: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+        text-align: center;
+    }
+
+    .nav-item {
+        margin: 10px 0;
+    }
+
+    .btn-login-minimal {
+        display: inline-block;
+        width: 100%; 
+        padding: 12px;
+    }
+}
