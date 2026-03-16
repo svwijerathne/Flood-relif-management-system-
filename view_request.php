@@ -21,7 +21,7 @@ $role = $_SESSION['role'] ?? "User";
         :root {
             --sidebar-width: 250px;
             --primary-blue: #007bff;
-            --dark-blue: #2c3e50;
+            --dark-blue: #04223f;
             --bg-gray: #f4f7f6;
         }
 
@@ -136,23 +136,37 @@ $role = $_SESSION['role'] ?? "User";
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            echo "<table><thead><tr>
-                    <th>Ref ID</th><th>District</th><th>Type</th><th>Severity</th><th>Status</th><th>Date</th>
-                </tr></thead><tbody>";
-            while($row = $result->fetch_assoc()) {
-                $status = strtolower($row['status']);
-                $badgeClass = ($status == 'pending') ? 'status-pending' : (($status == 'approved') ? 'status-approved' : '');
-                
-                echo "<tr>
-                    <td>#".$row['id']."</td>
-                    <td>".$row['district_name']."</td>
-                    <td>".$row['relief_type']."</td>
-                    <td>".$row['severity']."</td>
-                    <td><span class='status-badge $badgeClass'>".ucfirst($row['status'])."</span></td>
-                    <td>".date('Y-m-d', strtotime($row['created_at']))."</td>
-                </tr>";
-            }
-            echo "</tbody></table>";
+            // Find the table loop in your view_request.php and update it to this:
+echo "<table><thead><tr>
+        <th>Ref ID</th><th>District</th><th>Type</th><th>Severity</th><th>Status</th><th>Date</th><th>Action</th>
+    </tr></thead><tbody>";
+while($row = $result->fetch_assoc()) {
+    $status = strtolower($row['status']);
+    $badgeClass = ($status == 'pending') ? 'status-pending' : (($status == 'approved') ? 'status-approved' : '');
+    
+    echo "<tr>
+        <td>#".$row['id']."</td>
+        <td>".$row['district_name']."</td>
+        <td>".$row['relief_type']."</td>
+        <td>".$row['severity']."</td>
+        <td><span class='status-badge $badgeClass'>".ucfirst($row['status'])."</span></td>
+        <td>".date('Y-m-d', strtotime($row['created_at']))."</td>
+        
+<td>";
+if($status == 'pending') {
+
+    echo "<a href='edit_request.php?id=".$row['id']."' 
+             style='color: #0056b3; text-decoration: none; font-weight: 600; margin-right: 15px;'>Edit</a>";
+             
+    echo "<a href='delete_request.php?id=".$row['id']."' 
+             style='color: #d9534f; text-decoration: none; font-weight: 600;' 
+             onclick='return confirm(\"Are you certain you wish to permanently delete this relief request?\")'>Delete</a>";
+} else {
+    echo "<span style='color:gray; font-size:12px;'>-</span>";
+}
+echo "</td>;</tr>";
+}
+echo "</tbody></table>";
         } else {
             echo "<p style='text-align:center; color:#95a5a6;'>You have no submitted requests.</p>";
         }

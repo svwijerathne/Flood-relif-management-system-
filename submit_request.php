@@ -51,13 +51,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     );
 
     if ($stmt->execute()) {
-        $new_id = $conn->insert_id;
-        // Redirect to view_request.php with the new ID for the success message
-        header("Location: view_request.php?new_id=" . $new_id);
-        exit();
-    } else {
-        echo "Database Execution Error: " . $stmt->error;
-    }
+    // Redirect back to request.php with a success status
+    header("Location: request.php?status=success");
+    exit();
+} else {
+    // Redirect back with an error status
+    header("Location: request.php?status=error");
+    exit();
+}
     
     $stmt->close();
 }

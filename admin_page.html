@@ -13,62 +13,82 @@
         <div class="logo-box">
             <i class="fa-solid fa-hand-holding-heart protection-icon"></i>
             <span class="brand-flood">FLOOD </span><span class="brand-relief">RELIEF</span>
-                </div>
+        </div>
         <ul>
-            <li><a href="admin_page.html">Dashboard</a></li>
-            <li><a href="map.html">Map Control</a></li>
-            <li style="margin-top: 50px;">
-                <a href="login.html" style="color: #ff6b6b;">Logout</a>
-            </li>
-        </ul>
+    <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+    <li><a href="admin_users.php">Manage Users</a></li> 
+    <li><a href="admin_reports.php">System Reports</a></li> 
+    <li><a href="manage_reigon.php">Region Severity</a></li>
+    <li><a href="map.html">Map Control</a></li>
+    <li style="margin-top: 50px;"><a href="login.html" style="color: #ff6b6b;">Logout</a></li>
+
+</ul>
         <button class="mode-toggle" onclick="displayMode()">
             <i id="mode-icon" class="bi-moon-stars-fill"></i>
         </button>
     </div>
 
     <div class="main-content">
-        <div class="stats-container">
-            <div class="stat-card"><h3>Total Requests</h3><p id="totalCount">0</p></div>
-            <div class="stat-card" style="border-bottom: 4px solid #f39c12;"><h3>Pending</h3><p id="pendingCount">0</p></div>
-            <div class="stat-card" style="border-bottom: 4px solid #2ecc71;"><h3>Approved</h3><p id="approvedCount">0</p></div>
-            <div class="stat-card" style="border-bottom: 4px solid #e74c3c;">
-                <h3>Rejected</h3><p id="rejectedCount">0</p>
+        <div id="dashboardSection">
+            <div class="header-actions">
+                <h2>Dashboard Overview</h2>
+                <div class="full-width-controls">
+                    <div class="search-wrapper-main">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="adminSearch" placeholder="Search by ID or Name..." onkeyup="filterRequests()">
+                    </div>
+                    <div class="filter-row">
+                        <select id="filterArea" class="admin-dropdown" onchange="filterRequests()">
+                            <option value="">All Areas (Secretariats)</option>
+                            <option value="colombo">Colombo</option>
+                            <option value="gampaha">Gampaha</option>
+                            <option value="kalutara">Kalutara</option>
+                        </select>
+                        <select id="filterType" class="admin-dropdown" onchange="filterRequests()">
+                            <option value="">All Aid Types</option>
+                            <option value="Food">Food</option>
+                            <option value="Medicine">Medicine</option>
+                            <option value="Water">Water</option>
+                        </select>
+                    </div>
+                </div>
             </div>
+
+            <div class="stats-container">
+                <div class="stat-card total"><h3>Total Requests</h3><p id="totalCount">0</p></div>
+                <div class="stat-card pending"><h3>Pending</h3><p id="pendingCount">0</p></div>
+                <div class="stat-card approved"><h3>Approved</h3><p id="approvedCount">0</p></div>
+                <div class="stat-card rejected"><h3>Rejected</h3><p id="rejectedCount">0</p></div>
+            </div>
+
+            <div class="table-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Requested Date</th>
+                            <th>Name</th>
+                            <th>Aid Type</th>
+                            <th>Divisional Secretariat</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestsTableBody"></tbody>
+                </table>
+            </div>
+
         </div>
 
-        <h2>Manage Aid Requests</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Request ID</th>
-                    <th>Requested Date</th>
-                    <th>Name</th>
-                    <th>Aid Type</th>
-                    <th>Divisional Secretariat</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="requestsTableBody"></tbody>
-        </table>
-    </div>
     <script src="admin.js"></script>
     <script>
-    function displayMode() {
-        const element = document.getElementById("body");
-    const icon = document.getElementById("mode-icon");
-
-    if (element.classList.contains("lightMode")) {
-        // Switch to Dark Mode
-        element.classList.replace("lightMode", "darkMode");
-        // Swap icon: Sun -> Moon
-        icon.classList.replace("bi-moon-stars-fill","bi-sun-fill" );
-    } else {
-        // Switch to Light Mode
-        element.classList.replace("darkMode", "lightMode");
-        // Swap icon: Moon -> Sun
-        icon.classList.replace("bi-sun-fill", "bi-moon-stars-fill");
-    }
-}
+        function displayMode() {
+            const element = document.getElementById("body");
+            const icon = document.getElementById("mode-icon");
+            element.classList.toggle("darkMode");
+            element.classList.toggle("lightMode");
+            icon.classList.toggle("bi-moon-stars-fill");
+            icon.classList.toggle("bi-sun-fill");
+        }
     </script>
 </body>
 </html>

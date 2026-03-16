@@ -21,7 +21,7 @@ $role = $_SESSION['role'] ?? "User";
         :root {
             --sidebar-width: 260px;
             --primary-blue: #007bff;
-            --dark-bg: #2c3e50;
+            --dark-bg: #04223f;
             --light-bg: #f4f7f6;
         }
 
@@ -43,7 +43,7 @@ $role = $_SESSION['role'] ?? "User";
             padding: 30px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            background: #1a252f;
+            background: #04223f;
         }
         .user-profile .avatar {
             width: 60px; height: 60px; background: var(--primary-blue);
@@ -114,6 +114,19 @@ $role = $_SESSION['role'] ?? "User";
 
 <main class="main-content">
     <div class="container">
+    <?php
+    if (isset($_GET['status'])) {
+        if ($_GET['status'] == 'success') {
+            echo "<div style='background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; border: 1px solid #c3e6cb;'>
+                    <strong>Submission Successful!</strong> Your relief request has been recorded and is awaiting review.
+                  </div>";
+        } elseif ($_GET['status'] == 'error') {
+            echo "<div style='background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; border: 1px solid #f5c6cb;'>
+                    <strong>Submission Failed.</strong> There was a technical error processing your request. Please try again.
+                  </div>";
+        }
+    }
+    ?>
         <h2>Submit Flood Relief Request</h2>
         
         <form action="submit_request.php" method="POST">
