@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "flood_relief_system"; // Unified database name
+$database = "flood_relief_system"; 
 
 $conn = new mysqli($host, $user, $password, $database);
 

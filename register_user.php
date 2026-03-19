@@ -12,7 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($check_email);
 
     if ($result->num_rows > 0) {
-        echo "<script>alert('Email already registered.'); window.location.href='register.html';</script>";
+        echo "<script>alert('Email already registered.'); 
+        window.location.href='register.html';</script>";
         exit;
     }
 

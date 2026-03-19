@@ -1,20 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    // 1. Handle the Login Submission
+    
     const loginForm = document.getElementById('loginForm');
     const errorMessage = document.getElementById('errorMessage');
 
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop the page from reloading
-
-            // Clear any old error messages
+            e.preventDefault(); 
+            
             errorMessage.innerText = "";
 
-            // Gather the data from the inputs (using their 'name' attributes)
+            
             const formData = new FormData(this);
 
-            // Send data to PHP securely
+            
             fetch('login.php', {
                 method: 'POST',
                 body: formData
@@ -30,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-    // This will show you the ACTUAL system error on the webpage
+    
     errorMessage.innerText = "JS Error: " + error.message;
 });
         });

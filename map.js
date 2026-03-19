@@ -1,22 +1,22 @@
 // 1. Function to determine color based on severity
 function getColor(risk) {
     const r = risk ? risk.toLowerCase() : 'low';
-    if (r === 'high') return '#e74c3c';   // Red
-    if (r === 'medium') return '#e67e22'; // Orange
-    return '#2ecc71';                    // Green (Default)
+    if (r === 'high') return '#e74c3c';   
+    if (r === 'medium') return '#e67e22'; 
+    return '#2ecc71';                    
 }
 
 // 2. Fetch District Stats and then load the Map Shapes
 fetch('map.php')
     .then(res => res.json())
     .then(stats => {
-        // NOTE: Ensure this filename matches your uploaded GeoJSON file
+        
         fetch('geoBoundaries-LKA-ADM2.geojson') 
             .then(res => res.json())
             .then(geoData => {
                 L.geoJson(geoData, {
                     style: function (feature) {
-                        // Clean "Jaffna District" -> "Jaffna"
+                    
                         let dName = feature.properties.shapeName.replace(" District", "").trim();
                         
                         // If district not in DB, default to 'low' (Green)
@@ -33,7 +33,7 @@ fetch('map.php')
                         layer.on('mouseover', function (e) {
                             let dName = feature.properties.shapeName.replace(" District", "").trim();
                             
-                            // Get data from DB or provide defaults for "Clear" districts
+                            
                             const data = stats[dName] || { sent: 0, total: 0, severity: 'low' };
 
                             layer.bindTooltip(`

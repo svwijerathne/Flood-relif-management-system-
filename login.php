@@ -1,5 +1,5 @@
 <?php
-session_start(); // CRITICAL: This must be at the very top
+session_start(); 
 header('Content-Type: application/json');
 require_once 'db_config.php';
 
@@ -13,7 +13,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
-    // Note: In a real app, use password_verify(). Since you use plain text:
+    
     if ($password === $row['password']) {
         
         // 1. STORE DATA IN SESSION

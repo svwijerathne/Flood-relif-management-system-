@@ -50,7 +50,7 @@ while($row = $report_data->fetch_assoc()){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="stylesAdmin.css">
     <style>
-        /* CSS to hide non-essential UI during printing */
+        
         @media print {
             .sidebar, .no-print, .full-width-controls { display: none !important; }
             .main-content { margin-left: 0 !important; width: 100% !important; padding: 0; }

@@ -3,14 +3,12 @@ session_start();
 require_once 'db_config.php';
 
 // Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
-    exit();
-}
+$is_logged_in = isset($_SESSION['user_id']);
 
-$logged_user_id = $_SESSION['user_id'];
-$full_name = $_SESSION['full_name'] ?? "User"; // Matches login.php session
-$role = $_SESSION['role'] ?? "User";
+// Set user details for logged-in users or defaults for guests
+$logged_user_id = $is_logged_in ? $_SESSION['user_id'] : null;
+$full_name = $is_logged_in ? ($_SESSION['full_name'] ?? "User") : ""; 
+$role = $is_logged_in ? ($_SESSION['role'] ?? "User") : "Guest";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +25,7 @@ $role = $_SESSION['role'] ?? "User";
 
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--light-bg); margin: 0; display: flex; }
 
-        /* Sidebar Styling (Matches view_request.php) */
+        /* Sidebar Styling - Visible only for logged-in users */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
@@ -66,17 +64,21 @@ $role = $_SESSION['role'] ?? "User";
 
         .logout-btn { background: #e74c3c; padding: 15px; text-align: center; color: white; text-decoration: none; font-weight: bold; }
 
-        /* Main Content Layout */
-        .main-content { margin-left: var(--sidebar-width); padding: 40px; width: calc(100% - var(--sidebar-width)); }
+        /* Main Content Layout - Adjusts automatically for Guests */
+        .main-content { 
+            margin-left: <?php echo $is_logged_in ? 'var(--sidebar-width)' : '0'; ?>; 
+            padding: 40px; 
+            width: <?php echo $is_logged_in ? 'calc(100% - var(--sidebar-width))' : '100%'; ?>; 
+            transition: all 0.3s;
+        }
         
-        /* Form Styling */
         .container { 
             max-width: 800px; 
             background: white; 
             padding: 35px; 
             border-radius: 12px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
-            margin :0 auto;
+            margin: 0 auto;
         }
         h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 15px; }
         
@@ -93,10 +95,17 @@ $role = $_SESSION['role'] ?? "User";
             cursor: pointer; transition: 0.3s; width: 100%;
         }
         .btn-primary:hover { background: #0056b3; }
+        
+        .back-home { display: inline-block; margin-bottom: 20px; text-decoration: none; color: var(--primary-blue); font-weight: 600; }
+        
+        .alert { padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; border: 1px solid transparent; }
+        .alert-success { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .alert-error { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
     </style>
 </head>
 <body>
 
+<?php if ($is_logged_in): ?>
 <nav class="sidebar">
     <div class="user-profile">
         <div class="avatar"><?php echo strtoupper(substr($full_name, 0, 1)); ?></div>
@@ -111,28 +120,32 @@ $role = $_SESSION['role'] ?? "User";
     
     <a href="index.html" class="logout-btn">Logout</a>
 </nav>
+<?php endif; ?>
 
 <main class="main-content">
     <div class="container">
-    <?php
-    if (isset($_GET['status'])) {
-        if ($_GET['status'] == 'success') {
-            echo "<div style='background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; border: 1px solid #c3e6cb;'>
-                    <strong>Submission Successful!</strong> Your relief request has been recorded and is awaiting review.
-                  </div>";
-        } elseif ($_GET['status'] == 'error') {
-            echo "<div style='background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; border: 1px solid #f5c6cb;'>
-                    <strong>Submission Failed.</strong> There was a technical error processing your request. Please try again.
-                  </div>";
+        <?php if (!$is_logged_in): ?>
+            <a href="index.html" class="back-home">← Back to Home</a>
+        <?php endif; ?>
+
+        <?php
+        if (isset($_GET['status'])) {
+            if ($_GET['status'] == 'success') {
+                echo "<div class='alert alert-success'><strong>Success!</strong> Your relief request has been submitted.</div>";
+            } elseif ($_GET['status'] == 'error') {
+                echo "<div class='alert alert-error'><strong>Error!</strong> Failed to submit. Ensure the selected district is active.</div>";
+            }
         }
-    }
-    ?>
+        ?>
+
         <h2>Submit Flood Relief Request</h2>
         
         <form action="submit_request.php" method="POST">
             <label for="contact_person">Contact Person Full Name:</label>
             <input type="text" id="contact_person" name="contact_person" 
-                value="<?php echo htmlspecialchars($full_name); ?>" readonly>
+                value="<?php echo htmlspecialchars($full_name); ?>" 
+                <?php echo $is_logged_in ? 'readonly' : 'required'; ?> 
+                placeholder="Enter full name">
 
             <label for="contact_number">Phone Number:</label>
             <input type="text" id="contact_number" name="contact_number" required placeholder="07XXXXXXXX">
@@ -142,35 +155,33 @@ $role = $_SESSION['role'] ?? "User";
 
             <label for="region_id">District:</label>
             <select id="region_id" name="region_id" required>
-            <option value="">--Select District--</option>
-            <option value="1">Ampara</option>
-            <option value="2">Anuradhapura</option>
-            <option value="3">Badulla</option>
-            <option value="4">Batticaloa</option>
-            <option value="5">Colombo</option>
-            <option value="6">Galle</option>
-            <option value="7">Gampaha</option>
-            <option value="8">Hambantota</option>
-            <option value="9">Jaffna</option>
-            <option value="10">Kalutara</option>
-            <option value="11">Kandy</option>
-            <option value="12">Kegalle</option>
-            <option value="13">Kilinochchi</option>
-            <option value="14">Kurunegala</option>
-            <option value="15">Mannar</option>
-            <option value="16">Matale</option>
-            <option value="17">Matara</option>
-            <option value="18">Monaragala</option>
-            <option value="19">Mullaitivu</option>
-            <option value="20">Nuwara Eliya</option>
-            <option value="21">Polonnaruwa</option>
-            <option value="22">Puttalama</option>
-            <option value="23">Ratnapura</option>
-            <option value="24">Trincomalee</option>
-            <option value="25">Vavuniya</option>
-
-
-        </select>
+                <option value="">--Select District--</option>
+                <option value="1">Colombo</option>
+                <option value="2">Gampaha</option>
+                <option value="3">Kalutara</option>
+                <option value="4">Galle</option>
+                <option value="5">Matara</option>
+                <option value="6">Hambantota</option>
+                <option value="7">Jaffna</option>
+                <option value="8">Kilinochchi</option>
+                <option value="9">Mannar</option>
+                <option value="10">Vavuniya</option>
+                <option value="11">Mullaitivu</option>
+                <option value="12">Batticaloa</option>
+                <option value="13">Ampara</option>
+                <option value="14">Trincomalee</option>
+                <option value="15">Kurunegala</option>
+                <option value="16">Puttalam</option>
+                <option value="17">Anuradhapura</option>
+                <option value="18">Polonnaruwa</option>
+                <option value="19">Badulla</option>
+                <option value="20">Moneragala</option>
+                <option value="21">Ratnapura</option>
+                <option value="22">Kegalle</option>
+                <option value="23">Kandy</option>
+                <option value="24">Matale</option>
+                <option value="25">Nuwara Eliya</option>
+            </select>
 
             <label for="divisional_secretariat">Divisional Secretariat:</label>
             <input type="text" id="divisional_secretariat" name="divisional_secretariat" required>

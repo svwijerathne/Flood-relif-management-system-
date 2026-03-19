@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 14, 2026 at 05:21 PM
+-- Generation Time: Mar 19, 2026 at 03:58 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -42,7 +42,27 @@ INSERT INTO `regions` (`id`, `district_name`, `severity_level`) VALUES
 (2, 'Gampaha', 'Medium'),
 (3, 'Kalutara', 'Low'),
 (4, 'Galle', 'Low'),
-(5, 'Ratnapura', 'High');
+(5, 'Matara', 'High'),
+(6, 'Hambantota', 'Low'),
+(7, 'Jaffna', 'Low'),
+(8, 'Kilinochchi', 'Medium'),
+(9, 'Mannar', 'Medium'),
+(10, 'Vavuniya', 'Low'),
+(11, 'Mullaitivu', 'Medium'),
+(12, 'Batticaloa', 'High'),
+(13, 'Ampara', 'Medium'),
+(14, 'Trincomalee', 'Medium'),
+(15, 'Kurunegala', 'Medium'),
+(16, 'Puttalam', 'Medium'),
+(17, 'Anuradhapura', 'High'),
+(18, 'Polonnaruwa', 'High'),
+(19, 'Badulla', 'Medium'),
+(20, 'Moneragala', 'Medium'),
+(21, 'Ratnapura', 'High'),
+(22, 'Kegalle', 'Medium'),
+(23, 'Kandy', 'Medium'),
+(24, 'Matale', 'Medium'),
+(25, 'Nuwara Eliya', 'Medium');
 
 -- --------------------------------------------------------
 
@@ -78,8 +98,9 @@ INSERT INTO `requests` (`id`, `user_id`, `region_id`, `divisional_secretariat`, 
 (8, NULL, 5, 'Colombo DS', 'GN-101', 'Food', 'Sunil Perera', '0771112223', '123 Main St, Colombo', 4, 'High', 'Food aid successfully provided.', 'Approved', '2026-03-10 02:55:16'),
 (11, NULL, 2, 'Gampaha DS', 'GN-202', 'Medicine', 'Kamal Silva', '0719876543', '45 Park Rd, Gampaha', 2, 'Medium', 'Medicine required for children.', 'Pending', '2026-03-10 02:57:36'),
 (12, NULL, 3, 'Kalutara DS', 'GN-303', 'Shelter', 'Nimali Perera', '0751114445', '78 River Rd, Kalutara', 5, 'Low', 'Shelter tents requested.', 'Rejected', '2026-03-10 03:01:57'),
-(18, 16008, 5, 'colombo DS', 'GN-101', 'Medicine', 'hi how are you ', '0987763452', 'no25/10, Colombo 10', 2, 'Low', NULL, 'Pending', '2026-03-12 05:39:27'),
-(19, 16008, 5, 'colombo DS', 'GN-101', 'Medicine', 'hi how are you ', '0987763452', 'no25/10, Colombo 10', 2, 'Low', NULL, 'Rejected', '2026-03-12 05:41:13');
+(20, 16009, 5, 'colombo DS', 'GN-105', 'Water', 'pavithra sarathchandra', '076 654 6537', 'no 5, kumarswami mw, colombo 10', 4, 'Medium', NULL, 'Delivered', '2026-03-15 10:58:14'),
+(26, NULL, 3, 'kaluthara DS', 'GN 115', 'Medicine', 'sanjeewa wijerathna', '076 711 6646', 'no 40, Galle Rd, Kaluthara', 4, 'High', 'urgent medicine needed \r\npenadol\r\namoxiline \r\nvit c', 'Delivered', '2026-03-19 01:04:44'),
+(27, NULL, 4, 'Galle DS', 'GN-105', 'Food', 'ishini', '074 567 3456', 'no 54, Galle fort , Galle', 3, 'Medium', NULL, 'Pending', '2026-03-19 02:49:50');
 
 -- --------------------------------------------------------
 
@@ -105,7 +126,7 @@ INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `created_at
 (2, 'Chamil Pathum', 'chamilpathum@gmail.com', 'cp10#d', 'user', '2026-02-22 03:51:37'),
 (3, 'shashika De Silva', 'shashikasilva@gmail.com', '39ss@9', 'user', '2026-02-22 03:53:20'),
 (16007, 'sandali Wijerathne', 'san@gmail.com', 'san2005', 'admin', '2026-03-10 03:18:05'),
-(16008, 'hi how are you ', 'hi@gmail.com', 'hi123', 'user', '2026-03-12 04:23:12');
+(16009, 'pavithra sarathchandra', 'pavi@gmail.com', 'pavi123', 'user', '2026-03-15 10:56:56');
 
 --
 -- Indexes for dumped tables
@@ -141,19 +162,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `regions`
 --
 ALTER TABLE `regions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16009;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16010;
 
 --
 -- Constraints for dumped tables

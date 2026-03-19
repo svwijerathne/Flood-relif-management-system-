@@ -1,14 +1,12 @@
 <?php
 session_start();
-// Enable error reporting to catch any database issues
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+
 
 require_once 'db_config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    // 1. Logic for User ID (Sends NULL to DB if it's a guest)
+    
     $user_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : null;
 
     // 2. Collect and Clean POST data
